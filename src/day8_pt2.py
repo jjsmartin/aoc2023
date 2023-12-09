@@ -125,6 +125,6 @@ for k,v in paths.items():
     print(k, v)
     print()
 
-# TODO should probably make sure that there is exxactly one path from each start to each end, but it turns out that way
+# TODO should probably make sure that each start only connects to one end, but it turns out that way
 result = np.lcm.reduce([v for v in paths.values() if v is not None])
 print(result)

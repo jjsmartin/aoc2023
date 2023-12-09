@@ -70,7 +70,7 @@ class Hand:
 
             # Since this case is not a full house, the other 2 cards must not match.
             # So either it's 3 Jokers, which we make match one of the other 2 cards, getting 4 of a kind
-            #  or it's 1 Joker, which we make match one of the three of a kind, again getting 4 of a kind
+            #  or it's 1 Joker, and we make it match one of the three of a kind, again getting 4 of a kind
             # We could also construct a full house from this situation, but four of a kind is always better
             elif type == 'three_of_a_kind':
                 type = 'four_of_a_kind'
