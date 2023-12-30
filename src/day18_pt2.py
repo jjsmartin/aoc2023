@@ -1,8 +1,9 @@
-import networkx as nx
 import numpy as np
-from collections import namedtuple, deque
+from collections import namedtuple
+
 
 Instruction = namedtuple("Instruction", ["direction", "distance"])
+
 
 def parse_input(raw):
 
@@ -30,33 +31,47 @@ def correct_instruction(s: str) -> str:
     return int(distance_hex, 16), directions[int(direction)]
 
 
-def form_grid(dig_plan):
+def get_vertices(dig_plan):
 
-    directions = {'U': (-1,0), 'D': (1,0), 'L': (0,-1), 'R': (0,1)}
-
-    current_location = (0,0)
-    grid_locations = []
+    vertices = []
+    border_length = 0
+    i, j = 0, 0
     for instruction in dig_plan:
-        di, dj = directions[instruction.direction]
+        if instruction.direction == 'U':
+            i -= instruction.distance
+        elif instruction.direction == 'D':
+            i += instruction.distance 
+        elif instruction.direction == 'L':
+            j -= instruction.distance
+        elif instruction.direction == 'R':
+            j += instruction.distance 
+        else:
+            raise ValueError("Unknown direction")
 
-        for i in range(instruction.distance):
-            current_location = (current_location[0] + di, current_location[1] + dj)
-            grid_locations.append(current_location)
+        vertices.append((i,j))
 
-    top_left = (min([location[0] for location in grid_locations]), min([location[1] for location in grid_locations]))
-    bottom_right = (max([location[0] for location in grid_locations]), max([location[1] for location in grid_locations]))
+    return vertices 
 
-    grid = np.zeros((bottom_right[0]-top_left[0]+1, bottom_right[1]-top_left[1]+1))
-    for loc in grid_locations:
-        grid[loc[0]-top_left[0]][loc[1]-top_left[1]] = 1
 
-    return grid
+def get_border_length(dig_plan):
+
+    return sum([instruction.distance for instruction in dig_plan])
+
+
+def part2(input):
+
+    dig_plan = parse_input(input) 
+    vertices = get_vertices(dig_plan)
+    border_length = get_border_length(dig_plan)
+    capacity = shoelace(vertices) + border_length/2 + 1
+
+    return int(capacity)
 
 
 def shoelace(vertices):
     """Calculate the area of a polygon given its vertices."""
-    n = len(vertices)
-    return 0.5 * abs(sum([vertices[i][0] * vertices[(i+1)%n][1] - vertices[(i+1)%n][0] * vertices[i][1] for i in range(n)]))
+    n = len(vertices)-1
+    return 0.5 * abs(sum([vertices[i][0] * vertices[(i+1)][1] - vertices[(i+1)][0] * vertices[i][1] for i in range(n)]))
 
 
 
@@ -76,32 +91,13 @@ U 3 (#a77fa3)
 L 2 (#015232)
 U 2 (#7a21e3)"""
 
+assert part2(test_input) == 952408144115
+
+
 with open("inputs/day18.txt") as f:
     input = f.read()
 
-dig_plan = parse_input(input)
-#dig_plan = parse_input(test_input)
-
-# find the vertices
-vertices = []
-border_length = 0
-i, j = 0, 0
-for instruction in dig_plan:
-    if instruction.direction == 'U':
-        i -= instruction.distance
-    elif instruction.direction == 'D':
-        i += instruction.distance 
-    elif instruction.direction == 'L':
-        j -= instruction.distance
-    elif instruction.direction == 'R':
-        j += instruction.distance 
-    else:
-        raise ValueError("Unknown direction")
-
-    vertices.append((i,j))
-    border_length += instruction.distance
-
-capacity = int(shoelace(vertices) + border_length/2 + 1)
+result = part2(input)
 
 # 131431655002266
-print(f"Part 2 result: {capacity}")
+print(f"Part 2 result: {result}")
