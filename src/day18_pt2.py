@@ -63,6 +63,8 @@ def part2(input):
     dig_plan = parse_input(input) 
     vertices = get_vertices(dig_plan)
     border_length = get_border_length(dig_plan)
+
+    # Pick's theorem
     capacity = shoelace(vertices) + border_length/2 + 1
 
     return int(capacity)
@@ -98,6 +100,6 @@ with open("inputs/day18.txt") as f:
     input = f.read()
 
 result = part2(input)
-
+  
 # 131431655002266
 print(f"Part 2 result: {result}")
