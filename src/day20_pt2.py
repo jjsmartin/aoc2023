@@ -315,3 +315,37 @@ for module, ns in record.items():
 # 238815727638557
 result = lcm(*periods.values())
 print("Part 2 result: ", result)
+
+
+
+# visualization
+# import networkx as nx
+# import matplotlib.pyplot as plt
+
+# # build up a graph of the connections between modules, showing each module's type 
+# G = nx.DiGraph()
+# for module in modules.values():
+#     G.add_node(module.name, type=module.__class__.__name__)
+#     if hasattr(module, "destinations"):
+#         for destination in module.destinations:
+#             G.add_edge(module.name, destination.name)
+
+
+# type_colour_map = {
+#     'Button': 'blue',
+#     'Broadcaster': 'green',
+#     'Flipflop': 'orange',
+#     'Conjunction': 'yellow', 
+#     'Terminal': 'red'
+# }
+
+# node_colours = [type_colour_map[G.nodes[n]['type']] for n in G.nodes]
+
+
+# # plot the graph
+# plt.figure(figsize=(20,20))
+# pos = nx.spring_layout(G, k=0.5)
+# nx.draw_networkx_nodes(G, pos, node_size=500, node_color=node_colours)
+# nx.draw_networkx_labels(G, pos)
+# nx.draw_networkx_edges(G, pos, arrows=True, width=1.0, edge_color='black', alpha=0.1)
+# plt.show()
