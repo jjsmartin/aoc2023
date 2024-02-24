@@ -67,7 +67,7 @@ with open("inputs/day21.txt") as f:
 
 # generate some data we can fit a polynomial to;
 num_reachable_plots = []
-num_tilings = [1,5,9]  # odd number of tilings and target steps, to match the puzzle
+num_tilings = [1,5,9]  # odd number of tilings, to match the puzzle
 num_steps = []
 for N in num_tilings:
 
