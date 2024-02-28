@@ -21,9 +21,6 @@ def parse_input(input_raw: str):
 
     return bricks
 
-
-
-
 test_input_raw = """1,0,1~1,2,1
 0,0,2~2,0,2
 0,2,3~2,2,3
