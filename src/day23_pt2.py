@@ -1,9 +1,6 @@
 import networkx as nx
 import numpy as np
 
-from collections import defaultdict
-from itertools import permutations
-
 
 def parse_input_pt2(input_raw):
     trails = {}
